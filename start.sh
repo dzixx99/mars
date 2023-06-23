@@ -1,21 +1,19 @@
-set 
+set -eu
 
-export PYTHONUNBUFFERED-true
+export PYTHONUNBUFFERED=true
 
-VIRTUALENV-.data/venv
+VIRTUALENV=.data/venv
 
-if [ ! - d $VIRTUALENV ]; then
-
-python3 -m venv $VIRTUALENV
-
+if [ ! -d $VIRTUALENV ]; then
+    python3 -m venv $VIRTUALENV
 fi
 
-if [!-d $VIRTUALENV/bin/pip ]; then
-
-curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | $VIRTUALENV/bin/python 
+if [ ! -f $VIRTUALENV/bin/pip ]; then
+    curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | $VIRTUALENV/bin/python 
 fi
 
 $VIRTUALENV/bin/pip install -r requirements.txt
 
-$VIRTUALENV/bin/python app.py
-footer
+$VIRTUALENV/bin/python3 app.py
+
+Footer
